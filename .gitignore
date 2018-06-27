@@ -1,5 +1,4 @@
 .idea
-/.idea
 .gradle
 **/build/
 
@@ -11,14 +10,14 @@
 
 
 # idea project files
+/target
 *.iml
 *.ipr
 *.iws
 **/out
+**/gradle
 
 #vscode
 .vscode
 /bin/
-
-
-/target
+.idea
