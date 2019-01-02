@@ -1,7 +1,8 @@
 package com.windcoder.nightbook.common.utils.https;
 
 
-import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 import sun.net.www.protocol.https.HttpsURLConnectionImpl;
 
 import javax.net.ssl.SSLContext;

@@ -1,15 +1,17 @@
 package com.windcoder.nightbook.mina.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.windcoder.nightbook.mina.entity.WXHeader;
 import com.windcoder.nightbook.mina.exception.MinaAuthorizationAPIException;
 import com.windcoder.nightbook.mina.service.MinaLoginService;
 import com.windcoder.nightbook.mina.utils.Constants;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-
+@RestController
 @RequestMapping("/auth/")
 public class MinaLoginController {
 

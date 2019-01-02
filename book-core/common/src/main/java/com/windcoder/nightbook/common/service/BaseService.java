@@ -1,6 +1,7 @@
 package com.windcoder.nightbook.common.service;
 
 import com.windcoder.nightbook.common.repository.SupportRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -20,7 +21,7 @@ public class BaseService <T, ID extends Serializable, R extends SupportRepositor
         Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.clazz = clazz;
     }
-
+    @Autowired
     public <S extends R> void setRepository(S repository) {
         this.repository = repository;
     }

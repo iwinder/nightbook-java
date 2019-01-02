@@ -1,5 +1,7 @@
 package com.windcoder.nightbook.mina.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.windcoder.nightbook.common.entity.User;
 import com.windcoder.nightbook.common.service.UserService;
 import com.windcoder.nightbook.common.utils.Base64Util;
@@ -11,7 +13,7 @@ import com.windcoder.nightbook.mina.entity.MinaSession;
 import com.windcoder.nightbook.mina.exception.MinaAuthorizationAPIException;
 import com.windcoder.nightbook.mina.utils.Constants;
 import com.windcoder.nightbook.mina.utils.MinaUtil;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class MinaLoginService {
     @Autowired
     private UserService userService;
 
-    public JSONObject doLoginMain(Long pid,String jcode,String encryptData,String iv) throws MinaAuthorizationAPIException {
+    public JSONObject doLoginMain(Long pid, String jcode, String encryptData, String iv) throws MinaAuthorizationAPIException {
         if (!StringUtillZ.allIsNotEmpyty(jcode)){
             throw new MinaAuthorizationAPIException(ReturnCodeUtil.MA_PARA_ERR,"MA_PARA_ERR");
         }
@@ -36,16 +38,16 @@ public class MinaLoginService {
 
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+appInfo.getAppid()+"&secret="+appInfo.getSecret()+"&js_code="+jcode+"&grant_type=authorization_code";
         JSONObject resultData = HttpsUtil.httpRequest(url, "GET", "");
-        if(resultData.has("data")){
+        if(resultData.containsKey("data")){
             String dataStr = resultData.getString("data");
-            JSONObject result = new JSONObject(dataStr);
-            if(result.has("openid")&&result.has("session_key")&&result.has("expires_in")){
+            JSONObject result = JSON.parseObject(dataStr);
+            if(result.containsKey("openid")&&result.containsKey("session_key")&&result.containsKey("expires_in")){
                 MinaSession session = new MinaSession();
                 session.setMina(appInfo);
                 session.setOpenId(result.getString("openid"));
                 session.setSessionKey(result.getString("session_key"));
                 JSONObject j = MinaUtil.decrypt(appInfo.getAppid(),session.getSessionKey(),encryptData,iv);
-                if(j.has("openId")){
+                if(j.containsKey("openId")){
                     String userStr = Base64Util.encode(j.toString());
                     if(userStr!=null){
                         session.setUserInfo(userStr);

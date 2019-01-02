@@ -1,5 +1,8 @@
 package com.windcoder.nightbook.common.service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.windcoder.nightbook.common.dto.BookDto;
 import com.windcoder.nightbook.common.dto.UserBookCountDto;
 import com.windcoder.nightbook.common.entity.Book;
@@ -11,8 +14,6 @@ import com.windcoder.nightbook.common.utils.ModelMapperUtils;
 import com.windcoder.nightbook.common.utils.ReturnCodeUtil;
 import com.windcoder.nightbook.common.utils.ReturnResult;
 import com.windcoder.nightbook.common.utils.douBan.DouBanBookSearch;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -87,11 +88,11 @@ public class CoreConsumerService {
         }
         r.setCode(ReturnCodeUtil.MA_OK);
         r.setMsg("success");
-        JSONArray jsonArray = new JSONArray(bookDtoList);
-        JSONObject pageObj = new JSONObject(bookSearch);
+//        JSONArray jsonArray = JSONArray.parseArray(bookDtoList);
+//        JSONObject pageObj = new JSONObject(bookSearch);
         JSONObject result = new JSONObject();
-        result.put("pageInfo",pageObj);
-        result.put("books",jsonArray);
+        result.put("pageInfo",bookSearch);
+        result.put("books",bookDtoList);
         r.setResult(result);
         return r;
     }

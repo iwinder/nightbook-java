@@ -2,7 +2,10 @@ package com.windcoder.nightbook.common.utils;
 
 
 
-import org.json.JSONObject;
+
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.Serializable;
 
@@ -42,7 +45,7 @@ public class ReturnResult implements Serializable {
 
     public String toJsonString(){
 
-        JSONObject json = new JSONObject(this);
+        JSONObject json = (JSONObject) JSON.toJSON(this);
         return json.toString();
     }
 }

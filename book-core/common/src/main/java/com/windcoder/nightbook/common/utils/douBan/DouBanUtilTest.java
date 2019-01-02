@@ -1,7 +1,8 @@
 package com.windcoder.nightbook.common.utils.douBan;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.windcoder.nightbook.common.entity.Book;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -711,7 +712,7 @@ public class DouBanUtilTest {
                 "]\n" +
                 "}";
 
-        JSONObject j = new JSONObject(s);
+        JSONObject j = JSON.parseObject(s);
         List<Book> bookInfos = DouBanUtils.JsonArryToBookeInfo(j);
 
         System.out.println(bookInfos.toString());
@@ -920,9 +921,9 @@ public class DouBanUtilTest {
                 "},\n" +
                 "price: \"53.00元\"\n" +
                 "}";
-        JSONObject j = new JSONObject(s);
-        JSONObject j2 = new JSONObject(s2);
-        JSONObject j1 = new JSONObject(s1);
+        JSONObject j =  JSON.parseObject(s);
+        JSONObject j2 = JSON.parseObject(s2);
+        JSONObject j1 = JSON.parseObject(s1);
 
         System.out.println(j.toString());
         System.out.println(DouBanUtils.JsonToBookeInfo(j).toString());

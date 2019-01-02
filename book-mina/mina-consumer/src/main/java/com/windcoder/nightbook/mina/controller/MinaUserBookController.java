@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mina/")
+@RequestMapping("/jsapi/mina/")
 public class MinaUserBookController {
     @Autowired
     private CoreConsumerService coreConsumerService;

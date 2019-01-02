@@ -1,9 +1,11 @@
 package com.windcoder.nightbook.mina.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.windcoder.nightbook.common.utils.Base64Util;
 import com.windcoder.nightbook.common.utils.Pkcs7Encoder;
 import com.windcoder.nightbook.mina.exception.MinaAuthorizationAPIException;
-import org.json.JSONObject;
+
 
 import java.io.UnsupportedEncodingException;
 
@@ -28,7 +30,7 @@ public class MinaUtil {
         byte[] dec = Pkcs7Encoder.decryptOfDiyIV(encryptedDataBy, sessionKeyBy,ivBy);
         JSONObject j = null;
         try {
-            j = new JSONObject(new String(dec,"utf-8"));
+            j = JSON.parseObject(new String(dec,"utf-8"));
         } catch (UnsupportedEncodingException e) {
             throw new MinaAuthorizationAPIException("DECRYPT__USERINFO_ERR");
         }
