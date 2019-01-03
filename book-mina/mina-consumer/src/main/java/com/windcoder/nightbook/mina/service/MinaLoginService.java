@@ -7,6 +7,7 @@ import com.windcoder.nightbook.common.service.UserService;
 import com.windcoder.nightbook.common.utils.Base64Util;
 import com.windcoder.nightbook.common.utils.ReturnCodeUtil;
 import com.windcoder.nightbook.common.utils.StringUtillZ;
+import com.windcoder.nightbook.common.utils.UUIDUtil;
 import com.windcoder.nightbook.common.utils.https.HttpsUtil;
 import com.windcoder.nightbook.mina.entity.MinaInfo;
 import com.windcoder.nightbook.mina.entity.MinaSession;
@@ -44,6 +45,7 @@ public class MinaLoginService {
             if(result.containsKey("openid")&&result.containsKey("session_key")&&result.containsKey("expires_in")){
                 MinaSession session = new MinaSession();
                 session.setMina(appInfo);
+                session.setSkey(UUIDUtil.newUUID());
                 session.setOpenId(result.getString("openid"));
                 session.setSessionKey(result.getString("session_key"));
                 JSONObject j = MinaUtil.decrypt(appInfo.getAppid(),session.getSessionKey(),encryptData,iv);
@@ -51,10 +53,12 @@ public class MinaLoginService {
                     String userStr = Base64Util.encode(j.toString());
                     if(userStr!=null){
                         session.setUserInfo(userStr);
-                        minaSessionService.save(session);
+
                         User user = new User();
                         jsonToUser(j,user);
                         userService.save(user);
+                        session.setUserId(user.getId());
+                        minaSessionService.save(session);
                         JSONObject sobj = new JSONObject();
                         sobj.put("id",user.getId());
                         sobj.put("skey",session.getSkey());
